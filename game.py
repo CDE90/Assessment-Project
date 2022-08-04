@@ -2,7 +2,11 @@ import random
 import time
 
 
-def get_input(display_text, check, error_text="Invalid input. Please try again."):
+def get_input(
+    display_text: str,
+    check: function,
+    error_text: str = "Invalid input. Please try again.",
+) -> str:
     """Gets input from the user"""
 
     valid = False
@@ -16,7 +20,7 @@ def get_input(display_text, check, error_text="Invalid input. Please try again."
             continue
 
 
-def get_players():
+def get_players() -> dict[str, int]:
     """Gets inputs for the names of players"""
 
     # players will be stored in a dict with key: `name` and value: `score`
@@ -34,7 +38,7 @@ def get_players():
 
         # get input of player name
         name = get_input(
-            "Enter the name of player {}: ".format(len(players) + 1),
+            f"Enter the name of player {len(players) + 1}: ",
             lambda x: x.lower() in allowed_players,
             "Invalid name. Please try again.",
         )
@@ -57,7 +61,7 @@ def get_players():
     return players
 
 
-def check_win(players):
+def check_win(players: dict[str, int]) -> bool:
     """Checks if there is a winner to the game"""
 
     winners = {}
@@ -75,7 +79,7 @@ def check_win(players):
     elif len(winners) == 1:
         # if there is only one winner return the winner
         print(
-            "Game over! {} is the winner!".format(list(winners.keys())[0])
+            f"Game over! {list(winners.keys())[0]} is the winner!"
         )  # gets the name of the winner
         return True
 
@@ -89,23 +93,18 @@ def check_win(players):
 
         if scores[0] == scores[1]:
             # there is a draw
-            print(
-                "Game over! It's a draw between {} and {}!".format(
-                    names[0],
-                    names[1],
-                )
-            )
+            print(f"Game over! It's a draw between {names[0]} and {names[1]}!")
             return True
 
         else:
             # there is a winner
             print(
-                "Game over! {} is the winner!".format(names[0])
+                f"Game over! {names[0]} is the winner!"
             )  # gets the name of the winner (player with highest score)
             return True
 
 
-def player_rolls(players):
+def player_rolls(players: dict[str, int]) -> dict[str, int]:
     """Rolls the dice for each player"""
 
     # loop through players
@@ -119,9 +118,7 @@ def player_rolls(players):
         change = roll - 2
 
         # print the roll
-        print(
-            "{} rolled a {}, their score will change by {}!".format(name, roll, change)
-        )
+        print(f"{name} rolled a {roll}, their score will change by {change}!")
 
         # change the score
         players[name] += change
@@ -129,15 +126,15 @@ def player_rolls(players):
     return players
 
 
-def display_scores(players):
+def display_scores(players: dict[str, int]) -> None:
     """Displays the scores of all players"""
 
     # loop through players
     for name, score in players.items():
-        print("{}'s score is {}".format(name, score))
+        print(f"{name}'s score is {score}")
 
 
-def game():
+def game() -> bool:
     """Runs the game"""
 
     # get players input
@@ -173,7 +170,7 @@ def game():
     )
 
 
-def main():
+def main() -> None:
     """Starts the game & controls game repeats"""
 
     play = True
