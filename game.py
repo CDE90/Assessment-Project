@@ -28,7 +28,8 @@ def get_players() -> dict[str, int]:
     players = {}
 
     # a list of allowed players
-    allowed_players = ["player1", "player2", "player3", "player4"]
+    with open("allowed_names.txt") as f:
+        allowed_players = f.read().splitlines()
 
     # value to check if there is another player to add to the game
     another_player = True
