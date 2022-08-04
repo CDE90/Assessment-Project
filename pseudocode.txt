@@ -1,0 +1,100 @@
+def get_players():
+    // players will be stored in a dict with key: `name` and value: `score`
+    players = {}
+
+    // a list of allowed players
+    allowed_players = ['player1', 'player2', 'player3', 'player4']
+
+    // value to check if there is another player to add to the game
+    another_player = true
+
+    // makes sure there are at least 2 players (no-one wants to be alone)
+    // and if another player needs to be added
+    while players.length < 2 or another_player == true:
+        // get input of player name
+        name = input("Enter player name:")
+
+        // check if name is an allowed player
+        if name not in allowed_players:
+            print("Invalid Credentials")
+            // go to next name input
+            continue 
+
+        // set player score to 0
+        players[name] = 0
+
+        // if there are less than 2 players another player must be added
+        if players.length >= 2:
+            // ask players if they want to add another player
+            if input("Is there another player?").toLowerCase() in ["no", "n"]:
+                // if not set to false to stop loop
+                another_player = false
+
+def check_win(players):
+    // loop through player names and scores
+    for name, score in players:
+        // if player has reached win condition (>10 points)
+        if score > 10:
+            print("Game Over,", name, "won!")
+            // end game
+            return true
+    return false
+
+def player_rolls(players):
+    // loop through player names and scores
+    for name, score in players:
+        // generate random number like a 6-sided die
+        roll = random.randint(1, 6)
+
+        // calculate value to change score by
+        // roll of 1 or 2 will deduct points, 3 will leave points unchanged
+        // 4, 5 or 6 will add points
+        change = roll - 3
+
+        print(name, "rolled a: ", roll, "their score will change by: ", change)
+
+        // change player's score
+        player[name] = score + change
+
+    return players
+
+
+def display_scores(players):
+    // loop through player names and scores
+    for name, score in players:
+        print(name + ": " , score)
+
+def game():
+    // get players input
+    // players will be a dict of players and score
+    players = get_players()
+
+    // check if a player has won
+    win = check_win()
+
+    // win = true when there is a winner
+    if win:
+        play_again = input("Would you like to play again?")
+        // returns boolean value: true to play again, false to end
+        return play_again.toLowerCase() in ["yes", "y"]
+
+    // handles player rolls & updating scores
+    players = player_rolls(players)
+
+    // displays the current scores
+    display_scores(players)
+
+def main():
+    // initialise loop condition
+    play = true
+
+    // while players want to play
+    while play == true:
+
+        // game() returns a boolean based on whether players want to continue
+        play = game()
+
+    print("Thanks for playing!")
+
+// run the main function
+main()
