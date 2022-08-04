@@ -1,10 +1,11 @@
 import random
 import time
+import typing
 
 
 def get_input(
     display_text: str,
-    check: function,
+    check: typing.Callable[[str], bool],
     error_text: str = "Invalid input. Please try again.",
 ) -> str:
     """Gets input from the user"""
@@ -57,6 +58,8 @@ def get_players() -> dict[str, int]:
                 )
                 in ["y", "yes"]
             )
+
+    print()
 
     return players
 
@@ -133,6 +136,8 @@ def display_scores(players: dict[str, int]) -> None:
     for name, score in players.items():
         print(f"{name}'s score is {score}")
 
+    print()
+
 
 def game() -> bool:
     """Runs the game"""
@@ -158,7 +163,6 @@ def game() -> bool:
 
         # wait 1 second before next round
         time.sleep(1)
-        print()
 
     # returns boolean value: True to play again, False to quit
     return (
@@ -180,6 +184,8 @@ def main() -> None:
 
         # game() returns a boolean based on whether players want to continue
         play = game()
+
+        print()
 
     print("Thanks for playing!")
 
