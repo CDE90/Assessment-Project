@@ -2,6 +2,20 @@ import random
 import time
 
 
+def get_input(display_text, check, error_text="Invalid input. Please try again."):
+    """Gets input from the user"""
+
+    valid = False
+
+    while not valid:
+        inp = input(display_text)
+        if check(inp):
+            return inp
+        else:
+            print(error_text)
+            continue
+
+
 def get_players():
     """Gets inputs for the names of players"""
 
@@ -19,13 +33,11 @@ def get_players():
     while len(players) < 2 or another_player:
 
         # get input of player name
-        name = input("Enter the name of player {}: ".format(len(players) + 1))
-
-        # check if name is an allowed player
-        if name.lower() not in allowed_players:
-            print("Invalid name. Please try again.")
-            # go to next name input
-            continue
+        name = get_input(
+            "Enter the name of player {}: ".format(len(players) + 1),
+            lambda x: x.lower() in allowed_players,
+            "Invalid name. Please try again.",
+        )
 
         # set player score to 0
         players[name] = 0
@@ -34,12 +46,13 @@ def get_players():
         if len(players) >= 2:
             # ask players if they want to add another player
             # returns boolean: True if yes, False if no
-            another_player = input(
-                "Do you want to add another player? (y/n) "
-            ).lower() in [
-                "y",
-                "yes",
-            ]
+            another_player = (
+                get_input(
+                    "Do you want to add another player? (y/n) ",
+                    lambda x: x.lower() in ["y", "yes", "n", "no"],
+                )
+                in ["y", "yes"]
+            )
 
     return players
 
@@ -150,9 +163,14 @@ def game():
         time.sleep(1)
         print()
 
-    play_again = input("Do you want to play again? (y/n) ")
     # returns boolean value: True to play again, False to quit
-    return play_again.lower() in ["y", "yes"]
+    return (
+        get_input(
+            "Do you want to play again? (y/n) ",
+            lambda x: x.lower() in ["y", "yes", "n", "no"],
+        )
+        in ["y", "yes"]
+    )
 
 
 def main():
