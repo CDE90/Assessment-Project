@@ -21,7 +21,7 @@ Requires [python](https://www.python.org/downloads/) to be installed.
 To run the rust version of the game, run the following commands:
 
 ```bash
-cd rust
+cd rust-game
 
 cargo run
 # or
